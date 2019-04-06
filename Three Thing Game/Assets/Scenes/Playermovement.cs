@@ -5,7 +5,7 @@ public class Playermovement : MonoBehaviour {
 
     public Rigidbody rb;
 
-    public float forwardForce = 0f;
+    public float forwardForce = 0f; //change values to 500 etc
     public float leftForce = 0f;
     public float rightForce = 0f;
     public float backForce = 0f;
@@ -14,7 +14,7 @@ public class Playermovement : MonoBehaviour {
     public Text counter_Text;
     public Text winText;
     private int jump_counter = 3;
-    private gameplaymanager Gameplaymanager ;
+    private gameplaymanager Gameplaymanager;
 
     void Awake()
     {
@@ -25,13 +25,17 @@ public class Playermovement : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        Gameplaymanager.UpdateScore(jump_counter);
-        if (col.gameObject.name == "Power Up")
+        string powerupType = col.gameObject.name;
+        switch (powerupType)
         {
-            jump_counter += 3;
-            Gameplaymanager.UpdateScore(jump_counter);
-            Destroy(col.gameObject);
+            case "Jumps":
+                jump_counter += 3;
+                Destroy(col.gameObject);
+                break;
+            //case "Speed":
+             // forward speed ++
         }
+        Gameplaymanager.UpdateScore(jump_counter);
     }
 
     //void Start()
