@@ -364,8 +364,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -468, y: 233}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: -418.25, y: 230.13}
+  m_SizeDelta: {x: 259.51, y: 24.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959729106
 MonoBehaviour:
@@ -387,7 +387,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 331c615715af8134bbf3dc9a8276817b, type: 3}
+    m_Font: {fileID: 12800000, guid: 4605c994df7d8114c9aa39ea9d2cb598, type: 3}
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 1
@@ -399,7 +399,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Jumps Left
+  m_Text: 'JUMPS LEFT '
 --- !u!222 &959729107
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -628,11 +628,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1213279890}
-  fowardforcde: 500
-  leftforce: -500
-  rightforce: 500
-  backforce: -500
-  jumpforce: 10000
+  forwardForce: 500
+  leftForce: -500
+  rightForce: 500
+  backForce: -500
+  jumpForce: 10000
   counter_Text: {fileID: 0}
   winText: {fileID: 0}
 --- !u!135 &1213279892
@@ -726,6 +726,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7aef6426bab39c34e96c4565c10731d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1307016113
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1307016115}
+  - component: {fileID: 1307016114}
+  m_Layer: 5
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1307016114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1307016113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f659b04a91c9140a44fd83cd84dcf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counter_Text: {fileID: 959729106}
+--- !u!224 &1307016115
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1307016113}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 574, y: 267}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1398166756
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,14 +6,10 @@ using UnityEngine.UI;
 public class gameplaymanager : MonoBehaviour {
 
     public Text counter_Text;
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private int currentScore;
+    public void UpdateScore(int jump_counter)
+    {
+        currentScore = jump_counter;
+        counter_Text.text = "JUMPS LEFT  " + currentScore.ToString();
+    }
 }

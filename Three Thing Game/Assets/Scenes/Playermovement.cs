@@ -5,23 +5,26 @@ public class Playermovement : MonoBehaviour {
 
     public Rigidbody rb;
 
-    public float fowardforcde = 0f;
-    public float leftforce = 0f;
-    public float rightforce = 0f;
-    public float backforce = 0f;
-    public float jumpforce = 0f;
+    public float forwardForce = 0f;
+    public float leftForce = 0f;
+    public float rightForce = 0f;
+    public float backForce = 0f;
+    public float jumpForce = 0f;
 
     public Text counter_Text;
     public Text winText;
     private int jump_counter = 3;
+    private gameplaymanager Gameplaymanager ;
+
+    void Awake()
+    {
+        Gameplaymanager = GameObject.FindObjectOfType<gameplaymanager>();
+    }
     // Update is called once per frame
 
     void OnCollisionEnter(Collision col)
     {
-        if (col.gameObject.name == "Power_Up_Cube")
-        {
-            Destroy(col.gameObject);
-        }
+        Gameplaymanager.UpdateScore(jump_counter);
     }
 
     //void Start()
@@ -36,26 +39,26 @@ public class Playermovement : MonoBehaviour {
         
         if (Input.GetKey("w"))//forward
         {
-            rb.AddForce(0, 0, fowardforcde * Time.deltaTime);
+            rb.AddForce(0, 0, forwardForce * Time.deltaTime);
         }
         if (Input.GetKey("a"))//left
         {
-            rb.AddForce(leftforce * Time.deltaTime, 0, 0);
+            rb.AddForce(leftForce * Time.deltaTime, 0, 0);
         }
         if (Input.GetKey("d"))//right
         {
-            rb.AddForce(rightforce * Time.deltaTime, 0, 0);
+            rb.AddForce(rightForce * Time.deltaTime, 0, 0);
         }
         if (Input.GetKey("s"))
         {
-            rb.AddForce(0, 0, backforce * Time.deltaTime);
+            rb.AddForce(0, 0, backForce * Time.deltaTime);
         }
         if (Input.GetKeyDown("space"))
         {
-            
-            if (jump_counter > 0)
+            jump_counter -= 1;
+            if (jump_counter >= 0)
             {
-                rb.AddForce(0, jumpforce * Time.deltaTime, 0);
+                rb.AddForce(0, jumpForce * Time.deltaTime, 0);
                 Debug.Log(jump_counter + "Left");
             }
             else
@@ -65,12 +68,5 @@ public class Playermovement : MonoBehaviour {
         }
     }
 
-    void SetCountText()
-    {
-        counter_Text.text = "Count: " + jump_counter.ToString();
-        //if (count >= 12)
-        //{
-        //    winText.text = "You Win!";
-        //}
-    }
+
 }
