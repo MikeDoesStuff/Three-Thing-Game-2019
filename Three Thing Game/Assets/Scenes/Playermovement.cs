@@ -11,6 +11,8 @@ public class Playermovement : MonoBehaviour {
     public float backForce = 0f;
     public float jumpForce = 0f;
 
+    public Time time;
+    public Text time_debug;
     public Text counter_Text;
     public Text winText;
     private int jump_counter = 3;
@@ -78,6 +80,7 @@ public class Playermovement : MonoBehaviour {
                 Debug.Log("No jumps left");
             }
         }
+        Gameplaymanager.GetTime();
     }
 
 
