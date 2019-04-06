@@ -19,13 +19,14 @@ public class Playermovement : MonoBehaviour {
     void Awake()
     {
         Gameplaymanager = GameObject.FindObjectOfType<gameplaymanager>();
+        Gameplaymanager.UpdateScore(jump_counter);
     }
     // Update is called once per frame
 
     void OnCollisionEnter(Collision col)
     {
-        //Gameplaymanager.UpdateScore(jump_counter);
-        if (col.gameObject.name == "Power_Up_Cube")
+        Gameplaymanager.UpdateScore(jump_counter);
+        if (col.gameObject.name == "Power Up")
         {
             jump_counter += 3;
             Gameplaymanager.UpdateScore(jump_counter);
