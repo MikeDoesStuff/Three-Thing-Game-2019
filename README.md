@@ -1,2 +1,2 @@
 # ThreeThingGame2019
-game
+This is a three thing game thingy
