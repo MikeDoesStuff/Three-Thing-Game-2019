@@ -24,7 +24,13 @@ public class Playermovement : MonoBehaviour {
 
     void OnCollisionEnter(Collision col)
     {
-        Gameplaymanager.UpdateScore(jump_counter);
+        //Gameplaymanager.UpdateScore(jump_counter);
+        if (col.gameObject.name == "Power_Up_Cube")
+        {
+            jump_counter += 3;
+            Gameplaymanager.UpdateScore(jump_counter);
+            Destroy(col.gameObject);
+        }
     }
 
     //void Start()
@@ -56,6 +62,7 @@ public class Playermovement : MonoBehaviour {
         if (Input.GetKeyDown("space"))
         {
             jump_counter -= 1;
+            Gameplaymanager.UpdateScore(jump_counter);
             if (jump_counter >= 0)
             {
                 rb.AddForce(0, jumpForce * Time.deltaTime, 0);
