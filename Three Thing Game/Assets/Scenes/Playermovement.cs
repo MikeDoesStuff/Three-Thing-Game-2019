@@ -6,19 +6,26 @@ public class Playermovement : MonoBehaviour
 
     public Rigidbody rb;
 
-    public float forwardForce = 0f; //change values to 500 etc
-    public float leftForce = 0f;
-    public float rightForce = 0f;
-    public float backForce = 0f;
-    public float jumpForce = 0f;
+    public float forwardForce = 500f;
+    public float leftForce = -500f;
+    public float rightForce = 500f;
+    public float backForce = 500f; //only use for debug
+    public float jumpForce = 10000f;
 
     public static float timer;
     public static bool timeStarted = false;
-    public int remainingTime; //remaining powerup time
+    public struct RemainingTime
+    {
+        public int speedTime; 
+        public int slowTime;
+        //public remainingTime(int x)
+    }
+         //remaining powerup time
     public Text counter_Text;
     public Text winText;
     private int jump_counter = 3;
     private gameplaymanager Gameplaymanager;
+    RemainingTime remainingTime;
 
     void Awake()
     {
@@ -35,19 +42,25 @@ public class Playermovement : MonoBehaviour
                 jump_counter += 3;
                 Destroy(col.gameObject);
                 break;
-                case "Speed":
-
-                // forward speed ++
+            case "Speed":
+                forwardForce += 500f;
+                leftForce += -500f;
+                rightForce += 500f;
+                backForce += -500f;
+                remainingTime.speedTime = 10;
+                Destroy(col.gameObject);
+                break;
+            case "Slow":
+                forwardForce += -250f;
+                leftForce += 250f;
+                rightForce += -250f;
+                backForce += 250f;
+                remainingTime.slowTime = 10;
+                Destroy(col.gameObject);
+                break;
         }
         Gameplaymanager.UpdateScore(jump_counter);
     }
-    //void Start()
-    //{
-    //    //rb = GetComponent<Rigidbody>();
-    //    jump_counter = 0;
-    //    //SetCountText ();
-    //    //winText.text = "";
-    //}
     void Update() //called once per frame
     {
         // rb.AddForce(0, 0, fowardforcde * Time.deltaTime);

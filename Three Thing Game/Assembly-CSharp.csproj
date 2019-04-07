@@ -64,7 +64,6 @@
     <Compile Include="Assets\Scenes\followplayer.cs" />
     <Compile Include="Assets\Scenes\gameplaymanager.cs" />
     <Compile Include="Assets\Scenes\Playermovement.cs" />
-    <Compile Include="Assets\Scenes\powerupbehaviour.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/554576/ThreeThingGame2019/Three Thing Game/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
