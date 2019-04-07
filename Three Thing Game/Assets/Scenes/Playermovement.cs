@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-public class Playermovement : MonoBehaviour {
+public class Playermovement : MonoBehaviour
+{
 
     public Rigidbody rb;
 
@@ -11,8 +12,9 @@ public class Playermovement : MonoBehaviour {
     public float backForce = 0f;
     public float jumpForce = 0f;
 
-    public Time time;
-    public Text time_debug;
+    public static float timer;
+    public static bool timeStarted = false;
+    public int remainingTime; //remaining powerup time
     public Text counter_Text;
     public Text winText;
     private int jump_counter = 3;
@@ -22,9 +24,8 @@ public class Playermovement : MonoBehaviour {
     {
         Gameplaymanager = GameObject.FindObjectOfType<gameplaymanager>();
         Gameplaymanager.UpdateScore(jump_counter);
+        timeStarted = true;
     }
-    // Update is called once per frame
-
     void OnCollisionEnter(Collision col)
     {
         string powerupType = col.gameObject.name;
@@ -34,12 +35,12 @@ public class Playermovement : MonoBehaviour {
                 jump_counter += 3;
                 Destroy(col.gameObject);
                 break;
-            //case "Speed":
-             // forward speed ++
+                case "Speed":
+
+                // forward speed ++
         }
         Gameplaymanager.UpdateScore(jump_counter);
     }
-
     //void Start()
     //{
     //    //rb = GetComponent<Rigidbody>();
@@ -47,9 +48,10 @@ public class Playermovement : MonoBehaviour {
     //    //SetCountText ();
     //    //winText.text = "";
     //}
-    void Update () {
-       // rb.AddForce(0, 0, fowardforcde * Time.deltaTime);
-        
+    void Update() //called once per frame
+    {
+        // rb.AddForce(0, 0, fowardforcde * Time.deltaTime);
+
         if (Input.GetKey("w"))//forward
         {
             rb.AddForce(0, 0, forwardForce * Time.deltaTime);
@@ -80,8 +82,16 @@ public class Playermovement : MonoBehaviour {
                 Debug.Log("No jumps left");
             }
         }
-        Gameplaymanager.GetTime();
+        if(timeStarted == true)
+        {
+            timer += Time.deltaTime; 
+        }
     }
-
+    private void OnGUI()
+    {
+        float minutes = Mathf.Floor(timer / 60);
+        float seconds = Mathf.RoundToInt(timer % 60);
+        GUI.Label(new Rect(10, 10, 550, 300), seconds.ToString());
+    }
 
 }
