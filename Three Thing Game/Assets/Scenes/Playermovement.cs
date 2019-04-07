@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 public class Playermovement : MonoBehaviour
 {
@@ -12,26 +13,22 @@ public class Playermovement : MonoBehaviour
     public float backForce = 500f; //only use for debug
     public float jumpForce = 10000f;
 
+    //Timers
     public static float timer;
     public static bool timeStarted = false;
-    public struct RemainingTime
-    {
-        public int speedTime; 
-        public int slowTime;
-        //public remainingTime(int x)
-    }
-         //remaining powerup time
+    public static float[] remainingTime = new float[4];//remaining powerup time: (speedTime, slowTime)
+
     public Text counter_Text;
     public Text winText;
     private int jump_counter = 3;
     private gameplaymanager Gameplaymanager;
-    RemainingTime remainingTime;
 
     void Awake()
     {
         Gameplaymanager = GameObject.FindObjectOfType<gameplaymanager>();
         Gameplaymanager.UpdateScore(jump_counter);
         timeStarted = true;
+        InvokeRepeating("decreaseTimeRemaining", 1, 1);
     }
     void OnCollisionEnter(Collision col)
     {
@@ -43,19 +40,19 @@ public class Playermovement : MonoBehaviour
                 Destroy(col.gameObject);
                 break;
             case "Speed":
-                forwardForce += 500f;
-                leftForce += -500f;
-                rightForce += 500f;
-                backForce += -500f;
-                remainingTime.speedTime = 10;
+                remainingTime[0] = 10;
                 Destroy(col.gameObject);
                 break;
             case "Slow":
-                forwardForce += -250f;
-                leftForce += 250f;
-                rightForce += -250f;
-                backForce += 250f;
-                remainingTime.slowTime = 10;
+                remainingTime[1] = 10;
+                Destroy(col.gameObject);
+                break;
+            case "Jump":
+                remainingTime[2] = 10;
+                Destroy(col.gameObject);
+                break;
+            case "Time":
+                remainingTime[3] = 10;
                 Destroy(col.gameObject);
                 break;
         }
@@ -63,7 +60,6 @@ public class Playermovement : MonoBehaviour
     }
     void Update() //called once per frame
     {
-        // rb.AddForce(0, 0, fowardforcde * Time.deltaTime);
 
         if (Input.GetKey("w"))//forward
         {
@@ -83,28 +79,76 @@ public class Playermovement : MonoBehaviour
         }
         if (Input.GetKeyDown("space"))
         {
-            jump_counter -= 1;
             Gameplaymanager.UpdateScore(jump_counter);
-            if (jump_counter >= 0)
+            if (jump_counter > 0)
             {
                 rb.AddForce(0, jumpForce * Time.deltaTime, 0);
                 Debug.Log(jump_counter + "Left");
+                jump_counter -= 1;
             }
             else
             {
                 Debug.Log("No jumps left");
             }
         }
-        if(timeStarted == true)
+        if (timeStarted == true)
         {
-            timer += Time.deltaTime; 
+            timer += Time.deltaTime; //big float
+        }
+        if (remainingTime[0] > 0) //checks powerup time & applies buff
+        {
+            forwardForce = 1000f;
+            leftForce = -1000f;
+            rightForce = 1000f;
+            backForce = -1000f;
+        }
+        else if (remainingTime[1] > 0)
+        {
+            forwardForce = 250f;
+            leftForce = -750f;
+            rightForce = 250f;
+            backForce = -250f;
+        }
+        else if (remainingTime[2] > 0)
+        {
+            jumpForce = 15000f;
+        }
+        else if (remainingTime[3] > 0)
+        {
+            Time.timeScale = 0.7f;
+        }
+        else
+        {
+            forwardForce = 500f;
+            leftForce = -500f;
+            rightForce = 500f;
+            backForce = -500f;
+            jumpForce = 10000f;
+            Time.timeScale = 1.0f;
         }
     }
+    private void decreaseTimeRemaining()
+    {
+        for (int i = 0; i < remainingTime.Length; i++)
+        {
+            if (remainingTime[i] > 0)
+            {
+                remainingTime[i]--;
+            }
+        }
+    }
+
     private void OnGUI()
     {
+        float speedTime = Mathf.Floor(remainingTime[0]);
+        float slowTime = Mathf.Floor(remainingTime[1]);
+        float jumpTime = Mathf.Floor(remainingTime[2]);
+        float timeScaleTime = Mathf.Floor(remainingTime[3]);
         float minutes = Mathf.Floor(timer / 60);
         float seconds = Mathf.RoundToInt(timer % 60);
-        GUI.Label(new Rect(10, 10, 550, 300), seconds.ToString());
+        GUI.Label(new Rect(10, 10, 550, 300), seconds.ToString()); // timer debug
+        GUI.Label(new Rect(750, 10, 550, 300), "Forward force: " + forwardForce.ToString() + " Jump force: " + jumpForce.ToString() + " Timescale: " + Time.timeScale.ToString()); // speed / jump / timescale
+        GUI.Label(new Rect(300, 10, 550, 300), "Timeouts: " + "Speed: " + speedTime.ToString() + " Slow: " + slowTime.ToString() + " Jump: " + jumpTime.ToString() + " Time: " + timeScaleTime.ToString()); //powerup time debug
     }
 
 }
